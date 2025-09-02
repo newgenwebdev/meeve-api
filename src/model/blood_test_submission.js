@@ -85,8 +85,7 @@ const blood_test_submission = (sequelize) => {
         // Assessment based on FBG and HbA1C values: normal, prediabetes, diabetes
         type: DataTypes.ENUM('normal', 'prediabetes', 'diabetes', 'not_assessed'),
         defaultValue: 'not_assessed',
-        allowNull: false,
-        comment: 'Diabetes risk assessment based on blood test values'
+        allowNull: false
       },
       values_extracted_by: {
         // ID of the admin/health professional who extracted the values
