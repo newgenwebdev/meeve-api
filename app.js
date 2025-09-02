@@ -2,9 +2,8 @@ require("dotenv").config(); // Load environment variables from .env file
 const express = require("express"); // Import required modules
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { OAuth2Client } = require("google-auth-library"); // Import Google Auth Library
-const openApiSpec = require("./openapi"); // Import OpenAPI spec
-const scalar = require("@scalar/express-api-reference"); // Import Scalar
+const { OAuth2Client } = require("google-auth-library");
+const openApiSpec = require("./openapi");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -14,7 +13,7 @@ app.use(
   cors({
     origin: true, //"http://localhost:6767", // Allow only frontend origin
     credentials: true, // Allow cookies/auth headers
-  })
+  }),
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,20 +42,28 @@ const integrationRoutes = require("./src/routes/integration");
 const callbackRoutes = require("./src/routes/callback");
 
 // Set up Scalar API documentation
-app.use(
-  "/api-docs",
-  scalar.apiReference({
-    spec: {
-      content: openApiSpec,
-    },
-    customCss: `
-      .scalar-api-reference {
-        --scalar-border-radius: 0.5rem;
-        --scalar-color-accent: #3b82f6;
-      }
-    `,
-  })
-);
+async function setupScalarDocs() {
+  const scalar = await import("@scalar/express-api-reference");
+  app.use(
+    "/api-docs",
+    scalar.apiReference({
+      spec: {
+        content: openApiSpec,
+      },
+      customCss: `
+        .scalar-api-reference {
+          --scalar-border-radius: 0.5rem;
+          --scalar-color-accent: #3b82f6;
+        }
+      `,
+    }),
+  );
+}
+
+// Initialize Scalar docs
+setupScalarDocs().catch(err => {
+  console.error("Failed to initialize Scalar API documentation:", err);
+});
 //// break ////
 const { list_payment_gateway } = require("./src/resources/payment_gateway");
 const commercePayStatusCheck = require("./cronjob/commercePayStatusCheck");
