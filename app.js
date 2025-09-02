@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { OAuth2Client } = require("google-auth-library"); // Import Google Auth Library
 const openApiSpec = require("./openapi"); // Import OpenAPI spec
-const { createExpressApiReference } = require("@scalar/express-api-reference"); // Import Scalar
+const scalar = require("@scalar/express-api-reference"); // Import Scalar
 
 const app = express();
 const PORT = process.env.PORT;
@@ -45,7 +45,7 @@ const callbackRoutes = require("./src/routes/callback");
 // Set up Scalar API documentation
 app.use(
   "/api-docs",
-  createExpressApiReference({
+  scalar.apiReference({
     spec: {
       content: openApiSpec,
     },
