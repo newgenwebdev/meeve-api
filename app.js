@@ -44,11 +44,26 @@ const callbackRoutes = require("./src/routes/callback");
 // Set up Scalar API documentation
 async function setupScalarDocs() {
   const scalar = await import("@scalar/express-api-reference");
+  
+  // Create a middleware that serves the OpenAPI spec with dynamic server URL
+  app.get("/openapi.json", (req, res) => {
+    const dynamicSpec = {
+      ...openApiSpec,
+      servers: [
+        {
+          url: `${req.protocol}://${req.get('host')}`,
+          description: 'Current server'
+        }
+      ]
+    };
+    res.json(dynamicSpec);
+  });
+  
   app.use(
     "/api-docs",
     scalar.apiReference({
       spec: {
-        content: openApiSpec,
+        url: "/openapi.json"
       },
       customCss: `
         .scalar-api-reference {
