@@ -1,0 +1,21 @@
+{
+  "installMethod": "unknown",
+  "autoUpdates": true,
+  "firstStartTime": "2025-09-02T04:41:06.836Z",
+  "userID": "cdc9cdc89ed50a3f01254be1a22f26fb7819d13564e6956150f4cf8ca51b2e96",
+  "projects": {
+    "/Users/thor/Documents/ngwd/my-api-main": {
+      "allowedTools": [],
+      "history": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    }
+  },
+  "hasCompletedOnboarding": true
+}

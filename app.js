@@ -3,6 +3,8 @@ const express = require("express"); // Import required modules
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { OAuth2Client } = require("google-auth-library"); // Import Google Auth Library
+const openApiSpec = require("./openapi"); // Import OpenAPI spec
+const { createExpressApiReference } = require("@scalar/express-api-reference"); // Import Scalar
 
 const app = express();
 const PORT = process.env.PORT;
@@ -39,6 +41,22 @@ const bloodTestSubmissionRoute = require("./src/routes/blood_test_submission");
 const { get_member_info_by_token } = require("./src/resources/login");
 const integrationRoutes = require("./src/routes/integration");
 const callbackRoutes = require("./src/routes/callback");
+
+// Set up Scalar API documentation
+app.use(
+  "/api-docs",
+  createExpressApiReference({
+    spec: {
+      content: openApiSpec,
+    },
+    customCss: `
+      .scalar-api-reference {
+        --scalar-border-radius: 0.5rem;
+        --scalar-color-accent: #3b82f6;
+      }
+    `,
+  })
+);
 //// break ////
 const { list_payment_gateway } = require("./src/resources/payment_gateway");
 const commercePayStatusCheck = require("./cronjob/commercePayStatusCheck");

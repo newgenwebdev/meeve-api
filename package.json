@@ -19,6 +19,7 @@
   "author": "Dantard",
   "license": "ISC",
   "dependencies": {
+    "@scalar/express-api-reference": "^0.8.16",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^6.1.1",
